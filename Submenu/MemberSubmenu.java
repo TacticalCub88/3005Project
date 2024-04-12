@@ -47,4 +47,75 @@ public class MemberSubmenu {
 
         scanner.close();
     }
+
+    //lists goals,
+    public static void MyGoals() {
+        Scanner scanner = new Scanner(System.in);
+
+        int lowerBound = 0;
+        int upperBound = 3;
+        int userInput;
+
+        while (true) {
+            try {
+                System.out.println("0. Back");
+                userInput = scanner.nextInt();
+
+                if (userInput==0) {
+                    break;
+                } else {
+                    System.out.println("Please try a valid option.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Please try a valid option.");
+                scanner.next();
+            }
+        }
+
+        switch (userInput) {
+            case 0:
+                MainMenu();
+                break;
+            default:
+                System.out.println("Invalid input. Please try again.");
+                break;
+        }
+
+        scanner.close();
+    }
+
+    public static void CreateGoals() {
+        Scanner scanner = new Scanner(System.in);
+
+        int lowerBound = 0;
+        int upperBound = 3;
+        int userInput;
+
+        while (true) {
+            try {
+                System.out.println("0. Back");
+                userInput = scanner.nextInt();
+
+                if (userInput==0) {
+                    break;
+                } else {
+                    System.out.println("Please try a valid option.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Please try a valid option.");
+                scanner.next();
+            }
+        }
+
+        switch (userInput) {
+            case 0:
+                MainMenu();
+                break;
+            default:
+                System.out.println("Invalid input. Please try again.");
+                break;
+        }
+
+        scanner.close();
+    }
 }

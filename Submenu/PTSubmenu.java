@@ -99,4 +99,44 @@ public class PTSubmenu {
 
         scanner.close();
     }
+
+    public static void viewSchedule(){
+        Scanner scanner = new Scanner(System.in);
+
+        int lowerBound = 0;
+        int upperBound = 3;
+        int userInput;
+        
+        while (true) {
+            try {
+                System.out.println("------------------My Schedule------------------");
+                System.out.println("1. Edit Schedule");
+                System.out.println("0. Back");
+
+                System.out.println("Enter your choice: ");
+                userInput = scanner.nextInt();
+
+                if (userInput >= lowerBound && userInput <= upperBound) {
+                    break;
+                } else {
+                    System.out.println("Please try a valid option.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Please try a valid option.");
+                scanner.next();
+            }
+        }
+
+        switch (userInput) {
+            case 1:
+                
+                break;
+            case 0:
+                ListTrainers();
+                break;
+            default:
+                System.out.println("Please try a valid options")
+                break;
+        }
+    }
 }

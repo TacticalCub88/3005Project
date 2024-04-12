@@ -104,7 +104,7 @@ public class Main {
             try {
                 System.out.println("------------------Member------------------");
                 System.out.println("1. Goals");
-                System.out.println("2. Equipment");
+                System.out.println("2. Create Goal");
                 System.out.println("3. Training Session");
                 System.out.println("4. Exercise Plan");
                 System.out.println("5. Classes");
@@ -127,8 +127,10 @@ public class Main {
             case 0:
                 MainMenu();
             case 1:
+                MemberSubmenu.MyGoals();
                 break;
             case 2:
+                MemberSubmenu.CreateGoal();
                 break;
             case 3:
                 break;
