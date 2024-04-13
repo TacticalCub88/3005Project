@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.Scanner;
 
 public class Main {
@@ -158,26 +159,6 @@ public class Main {
         }
     }
 
-    public static void listSessions(String SQL) {
-        try {
-            PreparedStatement pstmt = connection.prepareStatement(SQL);
-            ResultSet rs = pstmt.executeQuery();
-
-            while (rs.next()) {
-                String id = rs.getString("PTSessionID");
-                String trainer = rs.getString("PTName");
-                String time = rs.getString("sessionTime");
-
-                System.out.println(
-                        "Session No.  " + id + " Trainer: " + trainer + "Time: " + time);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-
-        }
-    }
-
     public static void listRooms(String SQL) {
         try {
             PreparedStatement pstmt = connection.prepareStatement(SQL);
@@ -239,6 +220,28 @@ public class Main {
         } catch (SQLException e) {
             e.printStackTrace();
 
+        }
+    }
+
+    public static void listPTSessionsForMember(String SQL) {
+
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(SQL);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                int ptSessionID = rs.getInt("PTSessionID");
+                int ptID = rs.getInt("PTID");
+                Timestamp sessionTime = rs.getTimestamp("sessionTime");
+                int createdBy = rs.getInt("createdBy");
+                String ptName = rs.getString("PTName");
+
+                System.out.println("Session ID: " + ptSessionID + " | PT ID: " + ptID +
+                        " | PT Name: " + ptName + " | Session Time: " + sessionTime + " | Created By: " + createdBy);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -318,7 +321,7 @@ public class Main {
                 System.out.println("------------------Member------------------");
                 System.out.println("1. Goals");// done
                 System.out.println("2. Create Goal"); // done
-                System.out.println("3. Training Sessions");
+                System.out.println("3. Training Sessions"); // only delete left
                 System.out.println("4. Exercise Plan");
                 System.out.println("5. Classes");
                 System.out.println("0. Back to User Type Menu");
@@ -377,7 +380,7 @@ public class Main {
         while (true) {
             try {
                 System.out.println("------------------Personal Trainers------------------");
-                System.out.println("1. List Trainers");
+                System.out.println("1. List Trainers"); // done
                 System.out.println("2. Create");
                 System.out.println("0. Back to User Type Menu");
                 System.out.println("Enter your choice: ");
@@ -399,6 +402,7 @@ public class Main {
                 MainMenu();
                 break;
             case 1:
+                PTQueries.ListTrainers();
                 break;
             case 2:
                 break;
@@ -427,7 +431,7 @@ public class Main {
                 System.out.println("5. View Equipment"); // done
                 System.out.println("6. View Classes"); // done
                 System.out.println("7. Create Class");
-                System.out.println("8. View Transactions");
+                System.out.println("8. View Transactions"); // done
                 System.out.println("0. Back");
 
                 System.out.println("Enter your choice: ");

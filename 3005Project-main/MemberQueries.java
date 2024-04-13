@@ -7,14 +7,6 @@ public class MemberQueries {
         Main.runCreate(query, success);
     }
 
-    public static void ListMySessions(int id) {
-        String query = "SELECT PTSessions.*, personalTrainer.PTName " +
-                "FROM PTSessions " +
-                "INNER JOIN personalTrainer ON PTSessions.PTID = personalTrainer.PTID " +
-                "WHERE PTSessions.MemberID = " + id;
-        Main.listSessions(query);
-    }
-
     public static void CreateGoal(String goal) {
         System.out.println("in method, here's goal: " + goal);
         int memberid = Main.currentMember;
@@ -33,8 +25,20 @@ public class MemberQueries {
         Main.memberMenu();
     }
 
-    public static void createPTSession(String name, String time) {
+    public static void ListMySessions(int id) {
+        String query = "SELECT PTSessions.*, personalTrainer.PTName " +
+                "FROM PTSessions " +
+                "INNER JOIN personalTrainer ON PTSessions.PTID = personalTrainer.PTID " +
+                "WHERE PTSessions.MemberID = " + id;
+        Main.listPTSessionsForMember(query);
+    }
 
+    public static void createPTSession(int PTID, String time) {
+        int memberid = Main.currentMember;
+        String query = "INSERT INTO PTSessions(MemberID,PTID,sessionTime,createdBy)VALUES(" +
+                memberid + "," + PTID + "," + time + "," + memberid + ")";
+        String success = "Personal training session with " + PTID + " at " + time + " has been created";
+        Main.runCreate(query, success);
     }
 
 }

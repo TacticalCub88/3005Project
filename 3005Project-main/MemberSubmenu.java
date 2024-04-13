@@ -44,6 +44,7 @@ public class MemberSubmenu {
                 break;
             case 1:
                 MemberQueries.ListMySessions(Main.currentMember);
+                Main.memberMenu();
                 break;
             case 2:
                 BookPTSession();
@@ -86,18 +87,13 @@ public class MemberSubmenu {
 
         String[] parts = userInput.split(" ");
 
-        String name = null, time = null;
+        int trainern = 0;
+        String time = null;
 
-        if (parts.length == 2) {
-            name = parts[0];
-            time = parts[1];
-        } else {
-            System.out.println("Invalid input format.");
-        }
+        trainern = Integer.parseInt(parts[0]);
+        time = parts[1];
 
-        if (name != null && time != null) {
-            MemberQueries.createPTSession(name, time);
-        }
+        MemberQueries.createPTSession(trainern, time);
 
         scanner.close();
 
