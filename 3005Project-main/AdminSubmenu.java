@@ -126,13 +126,28 @@ public class AdminSubmenu {
 
     public static void processPayment() {
         Scanner scanner = new Scanner(System.in);
+        Scanner scanner1 = new Scanner(System.in);
         System.out.println("Please enter the persons id you would like to proecss: ");
         PTQueries.listMembers();
         int person = scanner.nextInt();
         System.out.println("Please enter the amount you would like to process: ");
-        double amount = scanner.nextDouble();
+        double amount = scanner1.nextDouble();
         AdminQueries.processPayment(person, amount);
         scanner.close();
+        scanner1.close();
 
+    }
+
+    public static void createClass() {
+        Scanner scanner = new Scanner(System.in);
+        Scanner scanner1 = new Scanner(System.in);
+
+        System.out.println("Please enter the name of the class: ");
+        String name = scanner.nextLine();
+        System.out.println("Please enter the room number of the class: ");
+        AdminQueries.listRooms();
+        int room = scanner1.nextInt();
+        AdminQueries.createClass(name, room);
+        
     }
 }

@@ -44,4 +44,9 @@ public class AdminQueries {
         // Main.adminQuery(query1);
         // Main.adminMenu();
     }
+
+    public static void createClass(String name, int room) {
+        String query = "INSERT INTO fitnessClass (Name, RID) VALUES ('" + name + "', '" + room + "')";
+        Main.adminQuery(query);
+    }
 }

@@ -12,4 +12,12 @@ public class PTQueries {
         Main.listTrainers(query);
 
     }
+
+    public static void createTrainer(String name, int age) {
+        // Query to create a new trainer
+        String query = "INSERT INTO personalTrainer (PTName, PTAge) VALUES ('" + name + "', " + age + ")";
+        Main.adminQuery(query);
+    }
+
+    
 }

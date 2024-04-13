@@ -106,10 +106,17 @@ public class MemberSubmenu {
 
     public static void ViewExercises() {
         int methodcurrentMember = Main.currentMember;
+        String query = "SELECT * FROM Exercise WHERE MemberID = " + methodcurrentMember;
+        Main.listWorkouts(query);
 
     }
 
     public static void ViewClasses() {
         int methodcurrentMember = Main.currentMember;
+        String query = "SELECT Join_Classes.*, fitnessClass.className " +
+               "FROM Join_Classes " +
+               "INNER JOIN fitnessClass ON Join_Classes.classID = fitnessClass.classID " +
+               "WHERE Join_Classes.MemberID = " + methodcurrentMember;
+        Main.listMemberClasses(query);
     }
 }

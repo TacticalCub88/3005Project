@@ -142,4 +142,15 @@ public class PTSubmenu {
 
         scanner.close();
     }
+
+    public static void createTrainer(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("------------------Create Trainer------------------");
+        System.out.println("What is the name of the trainer?");
+        String name = scanner.nextLine();
+        System.out.println("What is the age of the trainer?");
+        int age = scanner.nextInt();
+        PTQueries.createTrainer(name, age);
+
+    }
 }

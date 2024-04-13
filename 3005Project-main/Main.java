@@ -201,6 +201,26 @@ public class Main {
         }
     }
 
+    public static void listMemberClasses(String SQL) {
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(SQL);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                String name = rs.getString("className");
+                int rid = rs.getInt("RID");
+    
+
+                System.out
+                        .println("| Class Name. " + name + " | Room No. " + rid);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+    }
+
     public static void listTransactions(String SQL) {
         try {
             PreparedStatement pstmt = connection.prepareStatement(SQL);
@@ -238,6 +258,27 @@ public class Main {
 
                 System.out.println("Session ID: " + ptSessionID + " | PT ID: " + ptID +
                         " | PT Name: " + ptName + " | Session Time: " + sessionTime + " | Created By: " + createdBy);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void listWorkouts(String SQL) {
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(SQL);
+            ResultSet rs = pstmt.executeQuery();
+            System.out.println("------------------Workouts------------------");
+            while (rs.next()) {
+                int workoutID = rs.getInt("WorkoutID");
+                int memberID = rs.getInt("MemberID");
+                String workoutName = rs.getString("workoutName");
+                String SplitDay = rs.getString("splitDay");
+                
+                System.out.println(
+                        "Workout No. " + workoutID + " | Member No. " + memberID + " | Workout Name: " + workoutName
+                                + " | Split Day: " + SplitDay);
             }
 
         } catch (SQLException e) {
@@ -322,8 +363,8 @@ public class Main {
                 System.out.println("1. Goals");// done
                 System.out.println("2. Create Goal"); // done
                 System.out.println("3. Training Sessions"); // only delete left
-                System.out.println("4. Exercise Plan");
-                System.out.println("5. Classes");
+                System.out.println("4. Exercise Plans"); //pleasee test this
+                System.out.println("5. Classes"); // please test this
                 System.out.println("0. Back to User Type Menu");
                 System.out.println("Enter your choice: ");
                 userInput = scanner.nextInt();
@@ -381,7 +422,7 @@ public class Main {
             try {
                 System.out.println("------------------Personal Trainers------------------");
                 System.out.println("1. List Trainers"); // done
-                System.out.println("2. Create");
+                System.out.println("2. Create"); //please test this
                 System.out.println("0. Back to User Type Menu");
                 System.out.println("Enter your choice: ");
                 userInput = scanner.nextInt();
@@ -405,6 +446,7 @@ public class Main {
                 PTQueries.ListTrainers();
                 break;
             case 2:
+                PTSubmenu.createTrainer();
                 break;
             default:
                 System.out.println("Invalid input. Please try again.");
@@ -426,11 +468,11 @@ public class Main {
                 System.out.println("------------------Admin Menu------------------");
                 System.out.println("1. View Members"); // done
                 System.out.println("2. Show Trainers"); // done
-                System.out.println("3. Process Payment");
+                System.out.println("3. Process Payment"); // please test this
                 System.out.println("4. View Rooms"); // done
                 System.out.println("5. View Equipment"); // done
                 System.out.println("6. View Classes"); // done
-                System.out.println("7. Create Class");
+                System.out.println("7. Create Class"); //please test this
                 System.out.println("8. View Transactions"); // done
                 System.out.println("0. Back");
 
@@ -480,6 +522,7 @@ public class Main {
                 adminMenu();
                 break;
             case 7:
+                AdminSubmenu.createClass();
                 break;
             case 8:
                 AdminQueries.listTransactions();
@@ -490,6 +533,8 @@ public class Main {
                 break;
         }
 
-        scanner1.close();
+        //scanner1.close();
     }
+
+   
 }
