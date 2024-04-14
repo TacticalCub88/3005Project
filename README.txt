@@ -31,8 +31,8 @@ Project Report.pdf
 
 Others:
 README.txt
-Table.ddl
-Seeding.ddl
+DDL.sql
+DML.sql
 
-ER Diagram.png
-Relational Schematic.png
+Conceptual Design.png
+Reduction to Relation Schemas.png
