@@ -1,3 +1,12 @@
+import java.text.SimpleDateFormat;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.sql.*;
+
 public class MemberQueries {
 
     // create user
@@ -33,12 +42,42 @@ public class MemberQueries {
         Main.listPTSessionsForMember(query);
     }
 
-    public static void createPTSession(int PTID, String time) {
+    // input: 2024-04-10 08:00:00
+    public static void createPTSession(String PTID, String time) {
+        System.out.println(time);
         int memberid = Main.currentMember;
-        String query = "INSERT INTO PTSessions(MemberID,PTID,sessionTime,createdBy)VALUES(" +
-                memberid + "," + PTID + "," + time + "," + memberid + ")";
-        String success = "Personal training session with " + PTID + " at " + time + " has been created";
+
+        String query = "INSERT INTO PTSessions(MemberID, PTID, sessionTime, createdBy) VALUES(" +
+                memberid + "," + PTID + ",'" + time + "'," + memberid + ")";
+
+        String success = "Personal training session with " + PTID + " at " + Timestamp.valueOf(time)
+                + " has been created";
         Main.runCreate(query, success);
+    }
+
+    public static void dropPTSession(int sessionId) {
+        int memberid = Main.currentMember;
+        String query = "DELETE FROM PTSessions WHERE PTSessionID = " + String.valueOf(sessionId);
+        String success = "Training Session id " + String.valueOf(sessionId) + " has been deleted";
+        Main.runCreate(query, success);
+        Main.memberMenu();
+    }
+
+    public static void ViewExercises() {
+        int methodcurrentMember = Main.currentMember;
+        String query = "SELECT * FROM Workouts WHERE MemberID = " + methodcurrentMember;
+        Main.listWorkouts(query);
+        Main.memberMenu();
+    }
+
+    public static void ViewClasses() {
+        int methodcurrentMember = Main.currentMember;
+        String query = "SELECT Join_Classes.*, fitnessClass.className, fitnessClass.RID " +
+                "FROM Join_Classes " +
+                "INNER JOIN fitnessClass ON Join_Classes.classID = fitnessClass.classID " +
+                "WHERE Join_Classes.MemberID = " + methodcurrentMember;
+        Main.listMemberClasses(query);
+        Main.memberMenu();
     }
 
 }

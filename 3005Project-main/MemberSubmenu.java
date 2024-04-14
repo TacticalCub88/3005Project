@@ -85,38 +85,47 @@ public class MemberSubmenu {
         // seeds input
         String userInput = scanner.nextLine();
 
-        String[] parts = userInput.split(" ");
+        String[] parts = userInput.split(" ", 2);
 
-        int trainern = 0;
-        String time = null;
-
-        trainern = Integer.parseInt(parts[0]);
-        time = parts[1];
+        String trainern = parts[0];
+        String time = parts[1];
 
         MemberQueries.createPTSession(trainern, time);
-
+        Main.memberMenu();
         scanner.close();
 
     }
 
     public static void dropSession() {
         int methodcurrentMember = Main.currentMember;
+        // list trainers
+        PTQueries.ListTrainers();
+
+        System.out.println("Select a Training Session number you would like to drop");
+
+        Scanner scanner = new Scanner(System.in);
+
+        MemberQueries.ListMySessions(methodcurrentMember);
+        // seeds input
+        int userInput = scanner.nextInt();
+
+        MemberQueries.dropPTSession(userInput);
+
+        scanner.close();
 
     }
 
-    public static void ViewExercises() {
+    public static void AddExercise() {
         int methodcurrentMember = Main.currentMember;
-        String query = "SELECT * FROM Exercise WHERE MemberID = " + methodcurrentMember;
-        Main.listWorkouts(query);
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Please enter the name of the exercise");
+        String exerciseName = scanner.nextLine();
+        System.out.println("Please enter the splitDay");
+        String splitDay = scanner.nextLine();
+        String query = "INSERT INTO Workouts (MemberID, workoutName, splitDay) VALUES (" + methodcurrentMember + ", '"
+                + exerciseName + "', '" + splitDay + "')";
+        Main.adminQuery(query);
+        Main.memberMenu();
 
-    }
-
-    public static void ViewClasses() {
-        int methodcurrentMember = Main.currentMember;
-        String query = "SELECT Join_Classes.*, fitnessClass.className " +
-               "FROM Join_Classes " +
-               "INNER JOIN fitnessClass ON Join_Classes.classID = fitnessClass.classID " +
-               "WHERE Join_Classes.MemberID = " + methodcurrentMember;
-        Main.listMemberClasses(query);
     }
 }

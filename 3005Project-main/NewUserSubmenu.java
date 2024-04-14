@@ -23,7 +23,7 @@ public class NewUserSubmenu {
         if (name != null && age != 0) {
             MemberQueries.Create(name, age);
         }
-
+        Main.MainMenu();
         scanner.close();
 
     }

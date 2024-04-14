@@ -46,7 +46,7 @@ public class AdminQueries {
     }
 
     public static void createClass(String name, int room) {
-        String query = "INSERT INTO fitnessClass (Name, RID) VALUES ('" + name + "', '" + room + "')";
+        String query = "INSERT INTO fitnessClass (className , RID) VALUES ('" + name + "', '" + room + "')";
         Main.adminQuery(query);
     }
 }

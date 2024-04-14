@@ -209,7 +209,6 @@ public class Main {
             while (rs.next()) {
                 String name = rs.getString("className");
                 int rid = rs.getInt("RID");
-    
 
                 System.out
                         .println("| Class Name. " + name + " | Room No. " + rid);
@@ -275,12 +274,44 @@ public class Main {
                 int memberID = rs.getInt("MemberID");
                 String workoutName = rs.getString("workoutName");
                 String SplitDay = rs.getString("splitDay");
-                
+
                 System.out.println(
                         "Workout No. " + workoutID + " | Member No. " + memberID + " | Workout Name: " + workoutName
                                 + " | Split Day: " + SplitDay);
             }
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void ListTrainerSchedule(String SQL) {
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(SQL);
+            ResultSet rs = pstmt.executeQuery();
+            System.out.println("------------------My Schedule------------------");
+            while (rs.next()) {
+                String sessionTime = rs.getString("sessionTime");
+                String memberName = rs.getString("memberName");
+
+                System.out.println("Session Time: " + sessionTime + ", Member Name: " + memberName);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void ListPTMembers(String SQL) {
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(SQL);
+            ResultSet rs = pstmt.executeQuery();
+            System.out.println("------------------My Members------------------");
+            while (rs.next()) {
+
+                String memberName = rs.getString("memberName");
+
+                System.out.println("Member Name: " + memberName);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -300,7 +331,7 @@ public class Main {
                 System.out.println("1. Member");
                 System.out.println("2. Personal Trainer");
                 System.out.println("3. Admin");
-                System.out.println("4. New User");
+                System.out.println("4. New User"); // fully works
                 System.out.println("0. Exit");
                 System.out.println("Enter your choice: ");
                 userInput = scanner.nextInt();
@@ -353,7 +384,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         int lowerBound = 0;
-        int upperBound = 5;
+        int upperBound = 6;
 
         int userInput;
 
@@ -363,8 +394,9 @@ public class Main {
                 System.out.println("1. Goals");// done
                 System.out.println("2. Create Goal"); // done
                 System.out.println("3. Training Sessions"); // only delete left
-                System.out.println("4. Exercise Plans"); //pleasee test this
-                System.out.println("5. Classes"); // please test this
+                System.out.println("4. Exercise Plans"); // done
+                System.out.println("5. Classes"); // done
+                System.out.println("6. Add Exercise");
                 System.out.println("0. Back to User Type Menu");
                 System.out.println("Enter your choice: ");
                 userInput = scanner.nextInt();
@@ -396,10 +428,14 @@ public class Main {
                 MemberSubmenu.MyTrainingSessionOptions();
                 break;
             case 4:
-                MemberSubmenu.ViewExercises();
+                MemberQueries.ViewExercises();
                 break;
             case 5:
-                MemberSubmenu.ViewClasses();
+                MemberQueries.ViewClasses();
+
+                break;
+            case 6:
+                MemberSubmenu.AddExercise();
                 break;
             default:
                 System.out.println("Invalid input. Please try again.");
@@ -422,7 +458,7 @@ public class Main {
             try {
                 System.out.println("------------------Personal Trainers------------------");
                 System.out.println("1. List Trainers"); // done
-                System.out.println("2. Create"); //please test this
+                System.out.println("2. Create"); // done
                 System.out.println("0. Back to User Type Menu");
                 System.out.println("Enter your choice: ");
                 userInput = scanner.nextInt();
@@ -443,10 +479,22 @@ public class Main {
                 MainMenu();
                 break;
             case 1:
+                Scanner scanner2 = new Scanner(System.in);
                 PTQueries.ListTrainers();
+                System.out.println("select a Trainer");
+                Main.currentTrain = scanner2.nextInt();
+                PTSubmenu.TrainerOptions();
                 break;
             case 2:
-                PTSubmenu.createTrainer();
+                Scanner scanner5 = new Scanner(System.in);
+                System.out.println("------------------Create Trainer------------------");
+                System.out.println("What is the name of the trainer?");
+                String name = scanner5.nextLine();
+                System.out.println("What is the age of the trainer?");
+                int age = scanner5.nextInt();
+                scanner5.close();
+                PTQueries.createTrainer(name, age);
+                PTMenu();
                 break;
             default:
                 System.out.println("Invalid input. Please try again.");
@@ -472,7 +520,7 @@ public class Main {
                 System.out.println("4. View Rooms"); // done
                 System.out.println("5. View Equipment"); // done
                 System.out.println("6. View Classes"); // done
-                System.out.println("7. Create Class"); //please test this
+                System.out.println("7. Create Class"); // please test this
                 System.out.println("8. View Transactions"); // done
                 System.out.println("0. Back");
 
@@ -522,7 +570,16 @@ public class Main {
                 adminMenu();
                 break;
             case 7:
-                AdminSubmenu.createClass();
+                Scanner scanner5 = new Scanner(System.in);
+                Scanner scanner6 = new Scanner(System.in);
+
+                System.out.println("Please enter the name of the class: ");
+                String name = scanner5.nextLine();
+                System.out.println("Please enter the room number of the class: ");
+                AdminQueries.listRooms();
+                int room = scanner6.nextInt();
+                AdminQueries.createClass(name, room);
+                adminMenu();
                 break;
             case 8:
                 AdminQueries.listTransactions();
@@ -533,8 +590,7 @@ public class Main {
                 break;
         }
 
-        //scanner1.close();
+        // scanner1.close();
     }
 
-   
 }
