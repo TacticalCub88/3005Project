@@ -4,6 +4,7 @@ Video Link: https://youtu.be/rwwLeKrPzJo
 Members: 
 Jeffrey Ho 101189817
 Ethan Phamisith 101187098
+Group # 78
 
 How to compile:
 1. Ensure you have the database created using ddl table and seeding files
